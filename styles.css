@@ -147,53 +147,99 @@ body {
     }
 }
 
-/* ======== OBJETIVOS ESTRATÉGICOS ======== */
-#objetivos .carousel-item {
-    padding: 0 2rem;
+/* ======== ESTILOS PARA LA PRESENTACIÓN AUTOMÁTICA DE OBJETIVOS ======== */
+
+/* El contenedor principal sigue siendo alto para darnos espacio de scroll */
+.objetivos-sticky-container {
+    position: relative;
+    height: 120vh; 
 }
 
-.objetivo-card {
+/* NUEVO: Este es el "escenario" que se pega a la pantalla */
+.objetivos-cards-wrapper {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 20vh; /* Se pega al 20% de la altura */
+    height: 600px; /* Una altura fija para el escenario */
+    width: 100%;
+    overflow: hidden; /* Oculta cualquier cosa que se salga */
+}
+
+#objetivos .objetivo-card {
+    display: flex;
+    flex-direction: row;
+    
+    /* CORRECCIÓN: Cambiamos 'center' por 'flex-start' para alinear todo arriba */
+    align-items: center; 
+    
+    gap: 2rem;
+    
+    /* El resto de los estilos se mantiene igual */
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    min-height: 450px;
     background: #ffffff;
     padding: 2rem;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    margin-bottom: 1.5rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 60rem;
+    z-index: 1; 
+    will-change: transform, opacity;
+}
+
+/* NUEVO: Estilos para la columna de texto */
+.objetivo-text-content {
+    flex: 1 1 40%; /* Ocupa el 60% del espacio */
+    text-align: left; /* Alinea el texto a la izquierda */
+    justify-content: center;
+}
+
+.objetivo-text-content h3 {
+    text-align: left;
+}
+
+
+/* NUEVO: Estilos para la columna de la imagen */
+.objetivo-image-content {
+    flex: 1 1 40%; /* Ocupa el 40% del espacio */
+    height: 300px; /* Una altura fija para la imagen */
+}
+
+.objetivo-image-content img {
     width: 100%;
-    min-height: 350px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
+    border-radius: 8px;
 }
 
-.objetivo-card h3 {
-    text-align: center;
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
+/* NUEVO: Hacemos que se apile en celulares para mejor lectura */
+@media (max-width: 768px) {
+    #objetivos .objetivo-card {
+        flex-direction: column; /* Las columnas se ponen una encima de la otra */
+        min-height: auto; /* La altura se ajusta al contenido */
+        padding: 1.5rem;
+    }
+    
+    .objetivo-text-content {
+        flex-basis: auto; /* El ancho vuelve a ser automático */
+        width: 100%;
+        text-align: center;
+    }
+    .objetivo-text-content h3 {
+       text-align: center;
+    }
 
-.objetivo-card p {
-    font-size: 0.9rem;
+    .objetivo-image-content {
+        flex-basis: auto;
+        width: 100%;
+        height: 200px; /* Una altura menor para la imagen en móvil */
+        margin-top: 1rem;
+    }
 }
-
-.objetivo-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-}
-
-#objetivos .carousel-control-prev,
-#objetivos .carousel-control-next {
-    width: 5%;
-}
-
-#objetivos .carousel-control-prev-icon,
-#objetivos .carousel-control-next-icon {
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    padding: 1.2rem;
-}
-
 /* ======== SECCIÓN FACTORES DE ÉXITO ======== */
 #factores-exito {
     background-color: #0D1B2A;

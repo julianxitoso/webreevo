@@ -1,7 +1,6 @@
 // Variable global para el reproductor de YouTube
 let player;
 
-
 // LÓGICA PARA OCULTAR/MOSTRAR BARRA DE NAVEGACIÓN
 let lastScrollTop = 0;
 let scrollTimeout;
@@ -10,32 +9,26 @@ const navbar = document.querySelector('.navbar');
 window.addEventListener('scroll', function() {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    // Oculta la barra al bajar, pero solo después de pasar un poco del inicio
     if (scrollTop > lastScrollTop && scrollTop > 150){
         navbar.classList.add('navbar-hidden');
     } else {
-        // Muestra la barra al subir
         navbar.classList.remove('navbar-hidden');
     }
 
-    // Limpia el temporizador cada vez que se mueve el scroll
     clearTimeout(scrollTimeout);
 
-    // Inicia un temporizador: si no hay más scroll en 500ms, se considera "detenido"
+    // CORREGIDO: El tiempo de espera es ahora de 400ms
     scrollTimeout = setTimeout(() => {
-        // Muestra la barra cuando el scroll se detiene
-        if (scrollTop > 150) { // No la muestres si estamos casi al tope de la página
+        if (scrollTop > 150) {
              navbar.classList.remove('navbar-hidden');
         }
-    }, 12500); // 500 milisegundos = medio segundo
+    }, 400); 
 
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 });
 
 // Esta función es llamada automáticamente por la API de YouTube cuando está lista
-
 function onYouTubeIframeAPIReady() {
-    // Reproductor para la sección "Planeación Estratégica"
     player = new YT.Player('youtube-player', {
       height: '100%',
       width: '100%',
@@ -44,21 +37,10 @@ function onYouTubeIframeAPIReady() {
         'playsinline': 1, 'autoplay': 0, 'controls': 1,
         'rel': 0, 'modestbranding': 1, 'loop': 1,
         'playlist': 'dE3-cK-HYyY'
-      },
-      events: { 'onReady': onPlayerReady }
-    });
-  
-    // Reproductor para el video del Popup
-    popupPlayer = new YT.Player('youtube-popup-player', {
-      height: '100%',
-      width: '100%',
-      videoId: 'dE3-cK-HYyY', // Puedes usar el mismo video u otro
-      playerVars: {
-        'playsinline': 1, 'autoplay': 1, 'controls': 1,
-        'rel': 0
       }
     });
-  }
+    // ELIMINADO: El popupPlayer no se usaba.
+}
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -67,8 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (videoContainer) {
         const videoObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                // Asegurarnos que el 'player' de YouTube ya se haya cargado
-                if (typeof player !== 'undefined' && player.playVideo) {
+                if (player && typeof player.playVideo === 'function') {
                     if (entry.isIntersecting) {
                         player.playVideo();
                     } else {
@@ -76,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             });
-        }, { threshold: 0.5 }); // Se activa cuando el 50% del video es visible
+        }, { threshold: 0.5 });
         videoObserver.observe(videoContainer);
     }
 
@@ -86,22 +67,70 @@ document.addEventListener('DOMContentLoaded', function() {
         const myModal = new bootstrap.Modal(videoModalEl);
         const video = document.getElementById('popup-video');
 
-        // Muestra el modal 2 segundos después de que la página cargue
         setTimeout(() => {
             myModal.show();
         }, 2000);
 
-        // Cuando el modal se HAYA MOSTRADO, reproduce el video
         videoModalEl.addEventListener('shown.bs.modal', function () {
             video.play();
         });
 
-        // Cuando el modal se CIERRA, pausa y reinicia el video
         videoModalEl.addEventListener('hide.bs.modal', function () {
             video.pause();
-            video.currentTime = 0; // Vuelve al inicio
+            video.currentTime = 0;
         });
     }
+
+    // En script.js, reemplaza la lógica de GSAP de los objetivos con esto:
+
+// LÓGICA PARA EL EFECTO DE CARRUSEL (VERSIÓN OPTIMIZADA)
+gsap.registerPlugin(ScrollTrigger);
+
+const objetivoCards = gsap.utils.toArray('.objetivos-sticky-container .objetivo-card');
+const numCards = objetivoCards.length;
+
+gsap.set(objetivoCards, {
+    y: (i) => i * 80,
+    scale: (i) => 1 - i * 0.05,
+    opacity: (i) => 1 - i * 0.25,
+    zIndex: (i) => numCards - i,
+});
+gsap.set(objetivoCards[0], { y: 0, scale: 1, opacity: 1 });
+
+const masterTimeline = gsap.timeline({
+    repeat: -1,
+    scrollTrigger: {
+        trigger: ".objetivos-sticky-container",
+        start: "top top",
+        end: "bottom bottom",
+        toggleActions: "play pause resume reset"
+    }
+});
+
+objetivoCards.forEach((card, index) => {
+    masterTimeline.to({}, { duration: 4 });
+    
+    const transitionTimeline = gsap.timeline();
+    objetivoCards.forEach((c, i) => {
+        const newPos = (i - (index + 1) + numCards) % numCards;
+
+        // Animamos SOLO las propiedades visuales y rápidas
+        transitionTimeline.to(c, {
+            y: newPos * 80,
+            scale: 1 - newPos * 0.05,
+            opacity: newPos === 0 ? 1 : (1 - newPos * 0.25),
+            duration: 1.2,
+            ease: 'power2.inOut'
+        }, 0);
+
+        // CAMBIO CLAVE: Cambiamos el zIndex instantáneamente al INICIO de la transición
+        transitionTimeline.set(c, {
+            zIndex: numCards - newPos
+        }, 0);
+    });
+    masterTimeline.add(transitionTimeline);
+});
+
     // ANIMACIÓN DE ÓRBITA CON TEXTO ESTÁTICO
     const orbitContainer = document.querySelector('.orbit-container');
     const factors = document.querySelectorAll('.factor');
@@ -110,33 +139,33 @@ document.addEventListener('DOMContentLoaded', function() {
     let lastTimestamp = null;
 
     function animateOrbit(timestamp) {
-    if (!orbitActive) return;
-    if (!lastTimestamp) lastTimestamp = timestamp;
-    const delta = timestamp - lastTimestamp;
-    lastTimestamp = timestamp;
+        if (!orbitActive) return;
+        if (!lastTimestamp) lastTimestamp = timestamp;
+        const delta = timestamp - lastTimestamp;
+        lastTimestamp = timestamp;
 
-    orbitAngle += (360 / 30000) * delta;
-    if (orbitAngle >= 360) orbitAngle -= 360;
+        orbitAngle += (360 / 30000) * delta;
+        if (orbitAngle >= 360) orbitAngle -= 360;
 
-    factors.forEach((factor, i) => {
-        // Ajuste: -90 para que el primer factor esté arriba
-        const angle = i * 45 + orbitAngle - 90;
-        const rad = angle * Math.PI / 180;
-        const radius = window.innerWidth <= 768 ? 160 : 190;
-        const x = Math.cos(rad) * radius;
-        const y = Math.sin(rad) * radius;
-        factor.style.transform = `translate(${x}px, ${y}px)`;
+        // CORREGIDO: El radio ahora se calcula dinámicamente para ser responsivo.
+        const radius = orbitContainer.clientWidth / 2.2; 
 
-        // Mantener el texto derecho
-        factor.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px)`;
-        const inner = factor.querySelector('.factor-inner');
-        if (inner) inner.style.transform = `rotate(0deg)`;
-    });
+        factors.forEach((factor, i) => {
+            const angle = i * 45 + orbitAngle - 90;
+            const rad = angle * Math.PI / 180;
+            const x = Math.cos(rad) * radius;
+            const y = Math.sin(rad) * radius;
 
-    requestAnimationFrame(animateOrbit);
-}
+            // CORREGIDO: Se eliminó la línea de transform duplicada.
+            factor.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px)`;
+            
+            const inner = factor.querySelector('.factor-inner');
+            if (inner) inner.style.transform = `rotate(0deg)`;
+        });
 
-    // Activar/desactivar animación según scroll
+        requestAnimationFrame(animateOrbit);
+    }
+
     if (orbitContainer) {
         const orbitObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -163,10 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }, { threshold: 0.15 });
-
-        revealElements.forEach(element => {
-            revealObserver.observe(element);
-        });
+        revealElements.forEach(element => revealObserver.observe(element));
     }
 
         // --- SOLUCIÓN DEFINITIVA PARA EL SCROLL DEL MENÚ ---
