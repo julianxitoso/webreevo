@@ -60,7 +60,6 @@ function onYouTubeIframeAPIReady() {
     });
   }
 
-
 document.addEventListener('DOMContentLoaded', function() {
 
     // LÓGICA PARA CONTROLAR EL VIDEO DE YOUTUBE AL HACER SCROLL
@@ -169,5 +168,23 @@ document.addEventListener('DOMContentLoaded', function() {
             revealObserver.observe(element);
         });
     }
+
+        // --- SOLUCIÓN DEFINITIVA PARA EL SCROLL DEL MENÚ ---
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link[href^="#"]');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault(); // Previene el salto brusco del enlace
+
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
 
 });
