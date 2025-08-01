@@ -129,6 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
         factor.style.transform = `translate(${x}px, ${y}px)`;
 
         // Mantener el texto derecho
+        factor.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px)`;
         const inner = factor.querySelector('.factor-inner');
         if (inner) inner.style.transform = `rotate(0deg)`;
     });

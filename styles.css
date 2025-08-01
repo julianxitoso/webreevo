@@ -205,14 +205,19 @@ body {
 
 .orbit-container {
     position: relative;
-    width: 500px;
-    height: 500px;
-    margin: 0.5rem auto;
+    width: 400px;
+    height: 400px;
+    margin: 4rem auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px dashed rgba(255, 255, 255, 0.5);
     border-radius: 50%;
+
+    /* --- Cambios Clave --- */
+    width: 90vw; /* Ocupará el 90% del ancho de la pantalla */
+    max-width: 500px; /* Pero nunca será más grande que 500px (tamaño de escritorio) */
+    aspect-ratio: 1 / 1;
+    
 }
 
 .orbit-center {
@@ -236,8 +241,6 @@ body {
     width: 0px;
     top: 50%; /* JS calculará la posición final */
     left: 50%; /* JS calculará la posición final */
-    margin-top: -30px; /* Mitad de la altura */
-    margin-left: -30px; /* Mitad del ancho */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -256,11 +259,7 @@ body {
     font-weight: 500;
 }
 
-@media (max-width: 768px) {
-    .orbit-container { width: 320px; height: 320px; }
-    .orbit-center { width: 100px; height: 100px; font-size: 0.8rem; }
-    .factor { font-size: 0.7rem; width: 90px; height: 50px; margin-left: -45px; margin-top: -25px; }
-}
+
 
 /* ======== SECCIÓN PARTICIPACIÓN ======== */
 .participation-title {
