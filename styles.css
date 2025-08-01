@@ -1,0 +1,387 @@
+/* ======== ESTILOS GENERALES Y TIPOGRAFÍA ======== */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #e4e9ea;
+    color: #333;
+    padding-top: 110px; 
+}
+
+/* Contenedores de sección con fondo blanco para contrastar */
+#planeacion, #mision-vision, #objetivos, #participacion {
+    background-color: #ffffff;
+}
+
+.section-title {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+}
+
+/* ======== BARRA DE NAVEGACIÓN ======== */
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: top 0.4s ease-in-out;
+}
+
+.navbar-hidden {
+    top: -120px;
+}
+
+.navbar-brand img {
+    height: 95px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #0D1B2A !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;   
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    background-color: #0D1B2A;
+    color: #FFFFFF !important;
+}
+
+/* ======== SECCIÓN HERO (BANNER) ======== */
+.hero-section {
+    padding: 0;
+    background-color: #e4e9ea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-banner-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* ======== SECCIÓN PLANEACIÓN (VIDEO YOUTUBE) ======== */
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    height: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #e9ecef;
+}
+
+.video-container iframe,
+.video-container div#youtube-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.btn-benefits {
+    background-color: #e9ecef;
+    border-radius: 50rem;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    color: #495057;
+    border: none;
+}
+
+.btn-benefits:hover {
+    background-color: #0D1B2A;
+    color: #FFFFFF !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: top 0.4s ease-in-out;
+}
+
+.benefits-box {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.benefits-box ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.benefits-box ul li {
+    padding: 0.25rem 0;
+}
+
+/* ======== CARRUSEL NOSOTROS ======== */
+#mision-vision .carousel-item {
+    padding: 2rem 4rem;
+    transition: transform .6s ease-in-out;
+}
+
+#nosotrosCarousel img {
+    height: 350px;
+    object-fit: cover;
+    width: 100%;
+    border-radius: .5rem;
+}
+
+#mision-vision .carousel-control-prev,
+#mision-vision .carousel-control-next {
+    width: 5%;
+}
+
+#mision-vision .carousel-control-prev-icon,
+#mision-vision .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 1.2rem;
+}
+
+#nosotrosCarousel .carousel-item p {
+    text-align: left;
+}
+
+@media (min-width: 768px) {
+    #nosotrosCarousel .carousel-item p {
+        text-align: justify;
+    }
+}
+
+/* ======== OBJETIVOS ESTRATÉGICOS ======== */
+#objetivos .carousel-item {
+    padding: 0 2rem;
+}
+
+.objetivo-card {
+    background: #ffffff;
+    padding: 2rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.objetivo-card h3 {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.objetivo-card p {
+    font-size: 0.9rem;
+}
+
+.objetivo-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+#objetivos .carousel-control-prev,
+#objetivos .carousel-control-next {
+    width: 5%;
+}
+
+#objetivos .carousel-control-prev-icon,
+#objetivos .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 1.2rem;
+}
+
+/* ======== SECCIÓN FACTORES DE ÉXITO ======== */
+#factores-exito {
+    background-color: #0D1B2A;
+}
+
+#factores-exito .section-title {
+    color: #FFFFFF;
+}
+
+.orbit-container {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    margin: 0.5rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+}
+
+.orbit-center {
+    width: 200px;
+    height: 200px;
+    background-color: rgb(141,31,154);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 600;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    z-index: 10;
+    position: relative; /* Cambiado a relative */
+}
+
+.factor {
+    position: absolute;
+    width: 0px;
+    top: 50%; /* JS calculará la posición final */
+    left: 50%; /* JS calculará la posición final */
+    margin-top: -30px; /* Mitad de la altura */
+    margin-left: -30px; /* Mitad del ancho */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #FFFFFF;
+    background-color: transparent;
+    padding: 10px;
+    height: 60px;
+}
+
+.bottom-box {
+    border: 2px solid rgb(141,31,154);
+    color: #FFFFFF;
+    padding: 0.75rem;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .orbit-container { width: 320px; height: 320px; }
+    .orbit-center { width: 100px; height: 100px; font-size: 0.8rem; }
+    .factor { font-size: 0.7rem; width: 90px; height: 50px; margin-left: -45px; margin-top: -25px; }
+}
+
+/* ======== SECCIÓN PARTICIPACIÓN ======== */
+.participation-title {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 2.2rem;
+}
+
+.participation-subtitle {
+    font-size: 1.5rem;
+    color: #6c757d;
+    margin-top: -10px;
+}
+
+.participation-card {
+    border: 2px solid #6c757d;
+    border-radius: 8px;
+    padding: 1.5rem 1rem;
+    margin: 10px;
+    font-weight: 600;
+    color: #495057;
+    flex: 1 1 180px;
+    max-width: 200px;
+    transition: all 0.3s ease-in-out;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.participation-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    background-color: #2c3e50;
+    color: #ffffff;
+    border-color: #2c3e50;
+}
+
+.anim-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.anim-reveal.is-visible {
+    animation: reveal-up 0.6s ease-out forwards;
+    animation-delay: var(--delay, 0s);
+}
+
+@keyframes reveal-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ======== SECCIÓN DETALLES DEL EVENTO ======== */
+#evento-detalles {
+    background-color: #0D1B2A;
+    color: #FFFFFF;
+}
+
+#evento-detalles .section-title,
+#evento-detalles h3 {
+    color: #FFFFFF;
+    transition: color 0.3s ease;
+}
+
+.event-icon {
+    font-size: 3.5rem;
+    color: #FFFFFF;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    transition: color 0.3s ease;
+}
+
+#evento-detalles p {
+    transition: color 0.3s ease;
+}
+
+#evento-detalles .row > div:hover .event-icon,
+#evento-detalles .row > div:hover h3,
+#evento-detalles .row > div:hover p {
+    color: rgb(141,31,154);
+}
+
+/* ======== ESTILOS PARA EL MODAL DE VIDEO (NUEVO) ======== */
+#videoModal .modal-content {
+    background-color: transparent;
+    border: none;
+}
+
+#videoModal .modal-body {
+    padding: 0;
+    position: relative;
+    aspect-ratio: 16 / 9; /* Mantiene la proporción del video */
+}
+
+#videoModal .btn-close {
+    position: absolute;
+    top: -30px;
+    right: 0;
+    z-index: 20;
+    filter: invert(1) grayscale(100%) brightness(200%); /* Pone el botón en blanco */
+    opacity: 0.8;
+}
+
+#videoModal .btn-close:hover {
+    opacity: 1;
+}
+
+/* ======== FOOTER ======== */
+footer {
+    background-color: #ffffff;
+    color: #6c757d;
+    border-top: 1px solid #dee2e6;
+}
+
+footer a {
+    color: #2c3e50;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
