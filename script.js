@@ -103,7 +103,7 @@ const masterTimeline = gsap.timeline({
         trigger: ".objetivos-sticky-container",
         start: "top top",
         end: "bottom bottom",
-        toggleActions: "play pause resume reset"
+        toggleActions: "play none none none"
     }
 });
 
