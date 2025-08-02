@@ -22,7 +22,7 @@ window.addEventListener('scroll', function() {
         if (scrollTop > 150) {
              navbar.classList.remove('navbar-hidden');
         }
-    }, 400); 
+    }, 500000); 
 
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 });

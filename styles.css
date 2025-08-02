@@ -112,6 +112,25 @@ body {
     padding: 0.25rem 0;
 }
 
+/*
+ Estilos para la lista de beneficios desplegable
+*/
+#benefitsCollapse .list-group-item-action {
+    background-color: transparent; /* Fondo transparente por defecto */
+    transition: all 0.2s ease-in-out; /* Transición suave para el hover */
+}
+
+#benefitsCollapse .list-group-item-action:hover {
+    background-color: #f8f9fa; /* Un color de fondo muy sutil al pasar el mouse */
+    transform: translateX(10px); /* Mueve el elemento a la derecha en el hover */
+    color: var(--bs-primary); /* Cambia el color del texto al primario de Bootstrap (azul) */
+}
+
+#benefitsCollapse .list-group-item-action:hover i {
+    color: var(--bs-primary) !important; /* Asegura que el icono también cambie de color */
+}
+
+
 /* ======== CARRUSEL NOSOTROS ======== */
 #mision-vision .carousel-item {
     padding: 2rem 4rem;
@@ -194,7 +213,7 @@ body {
 /* NUEVO: Estilos para la columna de texto */
 .objetivo-text-content {
     flex: 1 1 40%; /* Ocupa el 60% del espacio */
-    text-align: left; /* Alinea el texto a la izquierda */
+    text-align: justify; /* Alinea el texto a la izquierda */
     justify-content: center;
 }
 
