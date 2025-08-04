@@ -113,24 +113,25 @@ body {
 }
 
 /*
- Estilos para la lista de beneficios desplegable
+ Estilos para listas interactivas (Beneficios, Valores y Pilares)
 */
-#benefitsCollapse .list-group-item-action {
-    background-color: transparent; /* Fondo transparente por defecto */
-    transition: all 0.2s ease-in-out; /* Transición suave para el hover */
+#benefitsCollapse .list-group-item-action,
+#mision-vision .list-group-item-action {
+    background-color: transparent;
+    transition: all 0.2s ease-in-out;
 }
 
-#benefitsCollapse .list-group-item-action:hover {
-    background-color: #f8f9fa; /* Un color de fondo muy sutil al pasar el mouse */
-    transform: translateX(10px); /* Mueve el elemento a la derecha en el hover */
-    color: var(--bs-primary); /* Cambia el color del texto al primario de Bootstrap (azul) */
+#benefitsCollapse .list-group-item-action:hover,
+#mision-vision .list-group-item-action:hover {
+    background-color: #f8f9fa;
+    transform: translateX(10px);
+    color: var(--bs-primary);
 }
 
-#benefitsCollapse .list-group-item-action:hover i {
-    color: var(--bs-primary) !important; /* Asegura que el icono también cambie de color */
+#benefitsCollapse .list-group-item-action:hover i,
+#mision-vision .list-group-item-action:hover i {
+    color: var(--bs-primary) !important;
 }
-
-
 /* ======== CARRUSEL NOSOTROS ======== */
 #mision-vision .carousel-item {
     padding: 2rem 4rem;
