@@ -161,6 +161,31 @@ body {
     text-align: left;
 }
 
+/*
+ Estilos para igualar la altura de las tarjetas del carrusel "Nosotros"
+*/
+#nosotrosCarousel .carousel-item .col-md-6 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra el contenido verticalmente */
+    min-height: 480px;       /* Define una altura mínima para la columna de texto */
+}
+
+#nosotrosCarousel .carousel-item img {
+    height: 480px;           /* Fija la altura de la imagen para que coincida */
+    object-fit: cover;       /* Evita que la imagen se deforme, la recorta si es necesario */
+    width: 100%;
+}
+
+/*
+ Corrige el "salto" en el carrusel "Nosotros" en la vista de escritorio
+*/
+@media (min-width: 768px) {
+  #nosotrosCarousel .section-title.mb-5 {
+    margin-bottom: 2rem !important; /* Reduce y estandariza el margen del título */
+  }
+}
+
 @media (min-width: 768px) {
     #nosotrosCarousel .carousel-item p {
         text-align: justify;
