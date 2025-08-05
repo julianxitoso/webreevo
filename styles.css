@@ -251,7 +251,7 @@ body {
 /* NUEVO: Estilos para la columna de la imagen */
 .objetivo-image-content {
     flex: 1 1 40%; /* Ocupa el 40% del espacio */
-    height: auto; /* Una altura fija para la imagen */
+    height: 350px; /* Una altura fija para la imagen */
 }
 
 .objetivo-image-content img {
@@ -280,10 +280,17 @@ body {
 
     .objetivo-image-content {
         flex-basis: auto;
-        width: 100%;
-        height: auto; /* Una altura menor para la imagen en móvil */
+        width: 50%;
+        height: 250px; /* Una altura menor para la imagen en móvil */
         margin-top: 1rem;
     }
+
+    .objetivo-image-content img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
+    border-radius: 8px;
+}
 }
 /* ======== SECCIÓN FACTORES DE ÉXITO ======== */
 #factores-exito {
