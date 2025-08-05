@@ -132,63 +132,85 @@ body {
 #mision-vision .list-group-item-action:hover i {
     color: var(--bs-primary) !important;
 }
-/* ======== CARRUSEL NOSOTROS ======== */
-#mision-vision .carousel-item {
-    padding: 2rem 4rem;
+
+/* ======== CARRUSEL NOSOTROS (ENFOQUE MOBILE-FIRST) ======== */
+
+/* --- Estilos base para Móvil --- */
+
+#nosotrosCarousel .carousel-item {
+    /* (1) Reducimos el padding horizontal para que no se apriete en móviles */
+    padding: 2rem 1.5rem; 
     transition: transform .6s ease-in-out;
 }
 
-#nosotrosCarousel img {
-    height: 350px;
-    object-fit: cover;
-    width: 100%;
-    border-radius: .5rem;
-}
-
-#mision-vision .carousel-control-prev,
-#mision-vision .carousel-control-next {
-    width: 5%;
-}
-
-#mision-vision .carousel-control-prev-icon,
-#mision-vision .carousel-control-next-icon {
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    padding: 1.2rem;
-}
-
-#nosotrosCarousel .carousel-item p {
-    text-align: left;
-}
-
-/*
- Estilos para igualar la altura de las tarjetas del carrusel "Nosotros"
-*/
-#nosotrosCarousel .carousel-item .col-md-6 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centra el contenido verticalmente */
-    min-height: 480px;       /* Define una altura mínima para la columna de texto */
+#nosotrosCarousel .section-title.mb-5 {
+    margin-bottom: 2rem !important; /* Estandariza el margen del título */
 }
 
 #nosotrosCarousel .carousel-item img {
-    height: 480px;           /* Fija la altura de la imagen para que coincida */
-    object-fit: cover;       /* Evita que la imagen se deforme, la recorta si es necesario */
+    /* (2) Altura automática en móvil y un máximo para que no sea gigante */
+    height: auto;
+    max-height: 350px; 
+    object-fit: cover;
     width: 100%;
+    border-radius: .5rem;
+    /* (3) Espacio entre la imagen y el texto cuando se apilan */
+    margin-bottom: 1.5rem; 
 }
 
-/*
- Corrige el "salto" en el carrusel "Nosotros" en la vista de escritorio
-*/
-@media (min-width: 768px) {
-  #nosotrosCarousel .section-title.mb-5 {
-    margin-bottom: 2rem !important; /* Reduce y estandariza el margen del título */
-  }
+#nosotrosCarousel .carousel-item p {
+    /* El texto justificado se ve mal en pantallas angostas, mejor a la izquierda */
+    text-align: left;
 }
 
+/* Estilos de los controles (flechas) */
+#nosotrosCarousel .carousel-control-prev,
+#nosotrosCarousel .carousel-control-next {
+    /* Quitamos el ancho fijo para que no molesten en móvil */
+    width: auto;
+}
+
+#nosotrosCarousel .carousel-control-prev-icon,
+#nosotrosCarousel .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.55);
+    border-radius: 50%;
+    padding: 1rem; /* Un tamaño de toque cómodo para dedos */
+}
+
+
+/* --- (4) Estilos para Tablet y Escritorio (768px en adelante) --- */
 @media (min-width: 768px) {
+
+    #nosotrosCarousel .carousel-item {
+        /* Restauramos el padding amplio para escritorio */
+        padding: 2rem 4rem;
+    }
+
+    #nosotrosCarousel .carousel-item .col-md-6 {
+        /* Activamos Flexbox para alinear el texto verticalmente al lado de la imagen */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* Restauramos la altura mínima para mantener la consistencia visual */
+        min-height: 480px; 
+    }
+
+    #nosotrosCarousel .carousel-item img {
+        /* Restauramos la altura fija para que todas las diapositivas sean iguales */
+        height: 480px;
+        /* Eliminamos el margen inferior que solo era para móvil */
+        margin-bottom: 0;
+    }
+
     #nosotrosCarousel .carousel-item p {
+        /* El texto justificado se ve elegante en pantallas anchas */
         text-align: justify;
+    }
+
+    #nosotrosCarousel .carousel-control-prev,
+    #nosotrosCarousel .carousel-control-next {
+        /* Devolvemos el ancho para que los controles se posicionen a los lados */
+        width: 5%;
     }
 }
 
@@ -483,40 +505,6 @@ footer a:hover {
     text-decoration: underline;
 }
 
-/*
- Estilos para ajustar imágenes y texto del carrusel en móviles y tablets
-*/
-@media (max-width: 991.98px) {
-  #nosotrosCarousel .carousel-item .row {
-    flex-direction: column-reverse;
-  }
-
-  #nosotrosCarousel .carousel-item img {
-    width: 50%;
-    max-height: 220px;
-    object-fit: cover;
-    display: block;
-    margin: 0 auto 1.5rem auto; /* Damos un poco más de aire a la imagen */
-  }
-
-  /* SOLUCIÓN PARA EL ESPACIO DEL TÍTULO */
-  #nosotrosCarousel .carousel-item h2.section-title {
-    font-size: 1.4rem;
-    margin-bottom: 0.75rem !important; /* Forzamos la reducción del margen con !important */
-  }
-
-  /* SOLUCIÓN PARA EL TEXTO JUSTIFICADO */
-  #nosotrosCarousel .carousel-item p {
-    font-size: 0.8rem;
-    margin-bottom: 0.8rem;
-    text-align: justify !important; /* Forzamos la justificación con !important */
-  }
-
-  #nosotrosCarousel .carousel-item ul li {
-    font-size: 0.9rem;
-    margin-bottom: 0.4rem;
-  }
-}
 
 @media (max-width: 768px) {
 
