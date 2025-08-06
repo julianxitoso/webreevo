@@ -32,6 +32,13 @@ body {
     height: 95px;
 }
 
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    text-align: justify;
+}
+
 .navbar-light .navbar-nav .nav-link {
     color: #0D1B2A !important;
     font-weight: 500;
