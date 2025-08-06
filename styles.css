@@ -245,6 +245,7 @@ body {
     
     /* CORRECCIÓN: Cambiamos 'center' por 'flex-start' para alinear todo arriba */
     align-items: center; 
+    cursor: pointer;
     
     gap: 2rem;
     

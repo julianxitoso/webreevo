@@ -6,10 +6,10 @@ let lastScrollTop = 0;
 let scrollTimeout;
 const navbar = document.querySelector('.navbar');
 
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    if (scrollTop > lastScrollTop && scrollTop > 150){
+    if (scrollTop > lastScrollTop && scrollTop > 150) {
         navbar.classList.add('navbar-hidden');
     } else {
         navbar.classList.remove('navbar-hidden');
@@ -20,9 +20,9 @@ window.addEventListener('scroll', function() {
     // CORREGIDO: El tiempo de espera es ahora de 400ms
     scrollTimeout = setTimeout(() => {
         if (scrollTop > 150) {
-             navbar.classList.remove('navbar-hidden');
+            navbar.classList.remove('navbar-hidden');
         }
-    }, 500000); 
+    }, 500000);
 
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 });
@@ -30,19 +30,19 @@ window.addEventListener('scroll', function() {
 // Esta función es llamada automáticamente por la API de YouTube cuando está lista
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('youtube-player', {
-      height: '100%',
-      width: '100%',
-      videoId: 'dE3-cK-HYyY',
-      playerVars: {
-        'playsinline': 1, 'autoplay': 0, 'controls': 1,
-        'rel': 0, 'modestbranding': 1, 'loop': 1,
-        'playlist': 'dE3-cK-HYyY'
-      }
+        height: '100%',
+        width: '100%',
+        videoId: 'dE3-cK-HYyY',
+        playerVars: {
+            'playsinline': 1, 'autoplay': 0, 'controls': 1,
+            'rel': 0, 'modestbranding': 1, 'loop': 1,
+            'playlist': 'dE3-cK-HYyY'
+        }
     });
     // ELIMINADO: El popupPlayer no se usaba.
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
     // LÓGICA PARA CONTROLAR EL VIDEO DE YOUTUBE AL HACER SCROLL
     const videoContainer = document.querySelector('.video-container');
@@ -81,55 +81,85 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // En script.js, reemplaza la lógica de GSAP de los objetivos con esto:
+    // En script.js
 
-// LÓGICA PARA EL EFECTO DE CARRUSEL (VERSIÓN OPTIMIZADA)
-gsap.registerPlugin(ScrollTrigger);
+    // LÓGICA PARA CARRUSEL INTERACTIVO Y AUTOMÁTICO (VERSIÓN FINAL)
+    gsap.registerPlugin(ScrollTrigger);
 
-const objetivoCards = gsap.utils.toArray('.objetivos-sticky-container .objetivo-card');
-const numCards = objetivoCards.length;
+    const objetivoCards = gsap.utils.toArray('.objetivos-sticky-container .objetivo-card');
+    const numCards = objetivoCards.length;
+    let currentCardIndex = 0;
+    let autoPlayTimer; // Variable para controlar el temporizador automático
 
-gsap.set(objetivoCards, {
-    y: (i) => i * 80,
-    scale: (i) => 1 - i * 0.05,
-    opacity: (i) => 1 - i * 0.25,
-    zIndex: (i) => numCards - i,
-});
-gsap.set(objetivoCards[0], { y: 0, scale: 1, opacity: 1 });
+    // 1. CONFIGURACIÓN INICIAL DE LA "BARAJA"
+    gsap.set(objetivoCards, {
+        y: (i) => i * 80,
+        scale: (i) => 1 - i * 0.05,
+        opacity: (i) => 1 - i * 0.25,
+        zIndex: (i) => numCards - i,
+    });
+    gsap.set(objetivoCards[0], { y: 0, scale: 1, opacity: 1 });
 
-const masterTimeline = gsap.timeline({
-    repeat: -1,
-    scrollTrigger: {
+
+    // 2. FUNCIÓN PRINCIPAL PARA MOVER LAS CARTAS
+    // Esta función es el corazón de la animación. Mueve todas las cartas a su posición
+    // correcta para que la tarjeta 'targetIndex' quede al frente.
+    function goToCard(targetIndex) {
+        currentCardIndex = targetIndex;
+
+        const transitionTimeline = gsap.timeline();
+        objetivoCards.forEach((c, i) => {
+            const newPos = (i - targetIndex + numCards) % numCards;
+
+            transitionTimeline.set(c, { zIndex: numCards - newPos }, 0);
+
+            transitionTimeline.to(c, {
+                y: newPos * 80,
+                scale: 1 - newPos * 0.05,
+                opacity: newPos === 0 ? 1 : (1 - newPos * 0.25),
+                duration: 1.2,
+                ease: 'power2.inOut'
+            }, 0);
+        });
+    }
+
+    // 3. FUNCIONES PARA CONTROLAR EL CICLO AUTOMÁTICO
+    function startAutoPlay() {
+        if (autoPlayTimer) {
+            autoPlayTimer.kill();
+        }
+        autoPlayTimer = gsap.delayedCall(4, () => {
+            const nextIndex = (currentCardIndex + 1) % numCards;
+            goToCard(nextIndex);
+            startAutoPlay(); // Reinicia el temporizador para el siguiente ciclo
+        });
+    }
+
+    function pauseAutoPlay() {
+        if (autoPlayTimer) {
+            autoPlayTimer.kill();
+        }
+    }
+
+    // 4. EVENTOS DE CLIC PARA INTERACTIVIDAD
+    objetivoCards.forEach((card, index) => {
+        card.addEventListener('click', () => {
+            pauseAutoPlay(); // Pausa el ciclo automático
+            goToCard(index); // Mueve a la tarjeta clickeada
+        });
+    });
+
+
+    // 5. SCROLLTRIGGER PARA INICIAR Y DETENER LA ANIMACIÓN
+    ScrollTrigger.create({
         trigger: ".objetivos-sticky-container",
         start: "top top",
         end: "bottom bottom",
-        toggleActions: "play none none none"
-    }
-});
-
-objetivoCards.forEach((card, index) => {
-    masterTimeline.to({}, { duration: 4 });
-    
-    const transitionTimeline = gsap.timeline();
-    objetivoCards.forEach((c, i) => {
-        const newPos = (i - (index + 1) + numCards) % numCards;
-
-        // Animamos SOLO las propiedades visuales y rápidas
-        transitionTimeline.to(c, {
-            y: newPos * 80,
-            scale: 1 - newPos * 0.05,
-            opacity: newPos === 0 ? 1 : (1 - newPos * 0.25),
-            duration: 1.2,
-            ease: 'power2.inOut'
-        }, 0);
-
-        // CAMBIO CLAVE: Cambiamos el zIndex instantáneamente al INICIO de la transición
-        transitionTimeline.set(c, {
-            zIndex: numCards - newPos
-        }, 0);
+        onEnter: startAutoPlay,      // Cuando la sección entra en vista, inicia el ciclo
+        onLeave: pauseAutoPlay,      // Cuando la sección sale de vista, lo pausa
+        onEnterBack: startAutoPlay,  // Cuando se vuelve a entrar, lo reanuda
+        onLeaveBack: pauseAutoPlay   // Cuando se va hacia arriba, lo pausa
     });
-    masterTimeline.add(transitionTimeline);
-});
 
     // ANIMACIÓN DE ÓRBITA CON TEXTO ESTÁTICO
     const orbitContainer = document.querySelector('.orbit-container');
@@ -148,7 +178,7 @@ objetivoCards.forEach((card, index) => {
         if (orbitAngle >= 360) orbitAngle -= 360;
 
         // CORREGIDO: El radio ahora se calcula dinámicamente para ser responsivo.
-        const radius = orbitContainer.clientWidth / 2.2; 
+        const radius = orbitContainer.clientWidth / 2.2;
 
         factors.forEach((factor, i) => {
             const angle = i * 45 + orbitAngle - 90;
@@ -158,7 +188,7 @@ objetivoCards.forEach((card, index) => {
 
             // CORREGIDO: Se eliminó la línea de transform duplicada.
             factor.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px)`;
-            
+
             const inner = factor.querySelector('.factor-inner');
             if (inner) inner.style.transform = `rotate(0deg)`;
         });
@@ -183,10 +213,10 @@ objetivoCards.forEach((card, index) => {
 
     // LÓGICA PARA ANIMACIONES DE APARICIÓN AL HACER SCROLL
     const revealElements = document.querySelectorAll('.anim-reveal');
-    if(revealElements.length > 0) {
+    if (revealElements.length > 0) {
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if(entry.isIntersecting) {
+                if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
                     revealObserver.unobserve(entry.target);
                 }
@@ -195,10 +225,10 @@ objetivoCards.forEach((card, index) => {
         revealElements.forEach(element => revealObserver.observe(element));
     }
 
-        // --- SOLUCIÓN DEFINITIVA PARA EL SCROLL DEL MENÚ ---
+    // --- SOLUCIÓN DEFINITIVA PARA EL SCROLL DEL MENÚ ---
     const navLinks = document.querySelectorAll('.navbar-nav .nav-link[href^="#"]');
     navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             e.preventDefault(); // Previene el salto brusco del enlace
 
             const targetId = this.getAttribute('href');
