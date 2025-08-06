@@ -239,6 +239,10 @@ body {
     overflow: hidden; /* Oculta cualquier cosa que se salga */
 }
 
+strong{
+    font-weight: 600;
+}
+
 #objetivos .objetivo-card {
     display: flex;
     flex-direction: row;
