@@ -49,9 +49,14 @@ HTML;
         $_SESSION['dp_id'] = null;
         $_SESSION['car_id'] = null;
 
-        // Redirigir a la página principal
-        header('Location: /');
-        exit();
+        // --- PASO DE DEPURACIÓN ---
+        echo '<h1>Depuración de Sesión</h1>';
+        echo '<p>Se han asignado las siguientes variables a la sesión:</p>';
+        echo '<pre>';
+        print_r($_SESSION);
+        echo '</pre>';
+        echo '<p>Si ves esto, el siguiente paso sería redirigir a la página principal. Si no llegas allí, es porque la sesión no se está guardando o leyendo correctamente después de la redirección.</p>';
+        exit(); // Detenemos la ejecución para poder ver este mensaje.
     }
 
     /**
