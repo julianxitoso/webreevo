@@ -1,18 +1,23 @@
 <?php
 
-// FORZAR LA CONFIGURACIÓN DE SESIÓN PARA ASEGURAR COMPATIBILIDAD
-ini_set('session.save_path', '/home/electroc/sessions');
+// --- Detección de Entorno ---
+$is_production = (isset($_SERVER['HTTP_HOST']) && str_contains($_SERVER['HTTP_HOST'], 'electrocreditosdelcauca.com'));
 
-// CONFIGURACIÓN DE LA SESIÓN COMPARTIDA
-// El dominio debe empezar con un punto para ser válido en todos los subdominios.
-session_set_cookie_params([
-    'lifetime' => 0,
-    'path' => '/',
-    'domain' => '.electrocreditosdelcauca.com',
-    'secure' => isset($_SERVER["HTTPS"]), // Enviar solo sobre HTTPS si está disponible
-    'httponly' => true,
-    'samesite' => 'Lax'
-]);
+if ($is_production) {
+    // --- CONFIGURACIÓN PARA PRODUCCIÓN ---
+    ini_set('session.save_path', '/home/electroc/sessions');
+    session_set_cookie_params([
+        'lifetime' => 0,
+        'path' => '/',
+        'domain' => '.electrocreditosdelcauca.com',
+        'secure' => true, // Se asume HTTPS en producción
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ]);
+} else {
+    // --- CONFIGURACIÓN PARA LOCAL ---
+    // No se hace nada, se usa la configuración por defecto de PHP.
+}
 
 // Iniciar la sesión en todas las páginas
 if (session_status() === PHP_SESSION_NONE) {
@@ -34,15 +39,19 @@ $requestPath = parse_url($requestUri, PHP_URL_PATH);
 switch ($requestPath) {
     case '/':
     case '/index.php':
-        // Proteger esta ruta, verificando la nueva variable de sesión
+        $controller = new HomeController();
+        $controller->index();
+        break;
+    
+    case '/dashboard':
         if (!isset($_SESSION['usu_id'])) {
             header('Location: /login');
             exit();
         }
         $controller = new HomeController();
-        $controller->index();
+        $controller->dashboard();
         break;
-    
+
     case '/login':
         $controller = new AuthController();
         $controller->showLogin();

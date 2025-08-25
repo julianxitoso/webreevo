@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="public/css/styles.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -34,7 +34,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="public/images/logo.png" alt="RE·EVO 2030 Logo">
+                <img src="/public/images/logo.png" alt="RE·EVO 2030 Logo">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,6 +49,23 @@
                     
                     <li class="nav-item"><a class="nav-link" href="#objetivos">Objetivos</a></li>
                     <li class="nav-item"><a class="nav-link" href="#factores-exito">RE·EVO</a></li>
+                    <?php if ($isLoggedIn): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/dashboard">Servicios</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle"></i> <?php echo htmlspecialchars($userName); ?>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/logout">Cerrar Sesión</a></li>
+                            </ul>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Iniciar Sesión</a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
@@ -56,7 +73,7 @@
 
     <header class="hero-section">
         <div class="container-fluid text-center px-0">
-            <img src="public/images/reevo-01.png" alt="Banner RE·EVO 2030" class="hero-banner-image">
+            <img src="/public/images/reevo-01.png" alt="Banner RE·EVO 2030" class="hero-banner-image">
         </div>
     </header>
 
@@ -144,7 +161,7 @@
                             <p style="text-align: justify;">Nos dedicamos a mejorar la calidad de vida de nuestra comunidad a través de la comercialización de productos y servicios accesibles, confiables y de alta calidad. Brindamos soluciones mejorando la inclusión financiera, por medio de vehículos financieros flexibles y un servicio excepcional, basándonos en la honestidad, el compromiso y la innovación.</p>
                         </div>
                         <div class="col-md-6">
-                            <img src="public/images/imagen-mision.jpg" class="d-block w-100" alt="Dos personas de negocios estrechando las manos en una oficina.">
+                            <img src="/public/images/imagen-mision.jpg" class="d-block w-100" alt="Dos personas de negocios estrechando las manos en una oficina.">
                         </div>
                     </div>
                 </div>
@@ -155,7 +172,7 @@
                             <p style="text-align: justify;">Para el año 2030, nuestro grupo empresarial será líder en la comercialización de productos y servicios en el suroccidente de Colombia, consolidando una red de negocios sólida, diversificada y sustentable. Nos distinguiremos por nuestra innovación tecnológica, servicio excepcional y compromiso con el desarrollo de nuestros clientes, colaboradores y la comunidad. Como familia empresaria, trabajaremos en armonía, respetando nuestro legado y garantizando la continuidad del negocio para las próximas generaciones.</p>
                         </div>
                         <div class="col-md-6">
-                           <img src="public/images/imagen-vision.jpg" class="d-block w-100" alt="Un equipo de trabajo diverso colaborando frente a un tablero con gráficos de crecimiento.">
+                           <img src="/public/images/imagen-vision.jpg" class="d-block w-100" alt="Un equipo de trabajo diverso colaborando frente a un tablero con gráficos de crecimiento.">
                         </div>
                     </div>
                 </div>
@@ -171,7 +188,7 @@
                             </ul>
                         </div>
                         <div class="col-md-6">
-                           <img src="public/images/imagen-valores.jpg" class="d-block w-100" alt="Una brújula dorada apuntando hacia el norte sobre un fondo de madera.">
+                           <img src="/public/images/imagen-valores.jpg" class="d-block w-100" alt="Una brújula dorada apuntando hacia el norte sobre un fondo de madera.">
                         </div>
                     </div>
                 </div>
@@ -187,7 +204,7 @@
                             </ul>
                         </div>
                         <div class="col-md-6">
-                           <img src="public/images/imagen-pilares.jpg" class="d-block w-100" alt="Cuatro columnas de estilo griego sosteniendo una estructura, simbolizando fuerza y soporte.">
+                           <img src="/public/images/imagen-pilares.jpg" class="d-block w-100" alt="Cuatro columnas de estilo griego sosteniendo una estructura, simbolizando fuerza y soporte.">
                         </div>
                     </div>
                 </div>
@@ -220,9 +237,9 @@
                     </div>
                     <div class="objetivo-image-content">
                         <picture>
-                            <source srcset="public/images/dondi_objcreciexp.webp" type="image/webp">
-                            <source srcset="public/images/dondi_objcreciexp.png" type="image/png">
-                            <img src="public/images/dondi_objcreciexp.webp" alt="Crecimiento y expansión" loading="lazy">
+                            <source srcset="/public/images/dondi_objcreciexp.webp" type="image/webp">
+                            <source srcset="/public/images/dondi_objcreciexp.png" type="image/png">
+                            <img src="/public/images/dondi_objcreciexp.webp" alt="Crecimiento y expansión" loading="lazy">
                         </picture>
                     </div>
                 </div>   
@@ -240,9 +257,9 @@
                     </div>
                     <div class="objetivo-image-content">
                         <picture>
-                            <source srcset="public/images/dondi_objinnovacion.webp" type="image/webp">
-                            <source srcset="public/images/dondi_objinnovacion.png" type="image/png">
-                            <img src="public/images/dondi_objinnovacion.webp" alt="Innovación y Digitalización" loading="lazy">
+                            <source srcset="/public/images/dondi_objinnovacion.webp" type="image/webp">
+                            <source srcset="/public/images/dondi_objinnovacion.png" type="image/png">
+                            <img src="/public/images/dondi_objinnovacion.webp" alt="Innovación y Digitalización" loading="lazy">
                         </picture>
                     </div>
                 </div>    
@@ -263,9 +280,9 @@
                     </div>
                     <div class="objetivo-image-content">
                         <picture>
-                            <source srcset="public/images/dondi_objseralcliente.webp" type="image/webp">
-                            <source srcset="public/images/dondi_objseralcliente.png" type="image/png">
-                            <img src="public/images/dondi_objseralcliente.webp" alt="Servicio al Cliente" loading="lazy">
+                            <source srcset="/public/images/dondi_objseralcliente.webp" type="image/webp">
+                            <source srcset="/public/images/dondi_objseralcliente.png" type="image/png">
+                            <img src="/public/images/dondi_objseralcliente.webp" alt="Servicio al Cliente" loading="lazy">
                         </picture>
                     </div>
                 </div>
@@ -284,9 +301,9 @@
                     </div>
                     <div class="objetivo-image-content">
                         <picture>
-                            <source srcset="public/images/dondi_objtalentoycultura.webp" type="image/webp">
-                            <source srcset="public/images/dondi_objtalentoycultura.png" type="image/png">
-                            <img src="public/images/dondi_objtalentoycultura.webp" alt="Talento y Cultura Organizacional" loading="lazy">
+                            <source srcset="/public/images/dondi_objtalentoycultura.webp" type="image/webp">
+                            <source srcset="/public/images/dondi_objtalentoycultura.png" type="image/png">
+                            <img src="/public/images/dondi_objtalentoycultura.webp" alt="Talento y Cultura Organizacional" loading="lazy">
                         </picture>
                     </div>  
                 </div>
@@ -305,9 +322,9 @@
                     </div>
                     <div class="objetivo-image-content">
                         <picture>
-                            <source srcset="public/images/dondi_objresponsocial.webp" type="image/webp">
-                            <source srcset="public/images/dondi_objresponsocial.png" type="image/png">
-                            <img src="public/images/dondi_objresponsocial.webp" alt="Sostenibilidad y Responsabilidad Social" loading="lazy">
+                            <source srcset="/public/images/dondi_objresponsocial.webp" type="image/webp">
+                            <source srcset="/public/images/dondi_objresponsocial.png" type="image/png">
+                            <img src="/public/images/dondi_objresponsocial.webp" alt="Sostenibilidad y Responsabilidad Social" loading="lazy">
                         </picture>
                     </div> 
                 </div>
@@ -443,10 +460,10 @@
                 <div class="col-md-4">
                     <i class="bi bi-card-checklist event-icon"></i>
                     <h3>Material Extra</h3>
-                        <a href="public/documentos/BASES-RE-EVO-2030.pdf" target="_blank" rel="noopener noreferrer" class= "d-block text-decoration-none">
+                        <a href="/public/documentos/BASES-RE-EVO-2030.pdf" target="_blank" rel="noopener noreferrer" class= "d-block text-decoration-none">
                             <i class="bi bi-file-earmark-pdf-fill"></i> Bases RE·EVO 2030
                         </a>
-                        <a href="public/documentos/PLANEACION-RE-EVO-2030.pdf" target="_blank" rel="noopener noreferrer" class= "d-block text-decoration-none">
+                        <a href="/public/documentos/PLANEACION-RE-EVO-2030.pdf" target="_blank" rel="noopener noreferrer" class= "d-block text-decoration-none">
                             <i class="bi bi-file-earmark-pdf-fill"></i> Planeación RE·EVO 2030
                         </a>
                         <p>
@@ -464,6 +481,7 @@
             <small class="d-block text-muted mt-3">Desarrollado por Departamento de Sistemas - Arpesod Asociados SAS</small>
         </div>
     </footer>
+    
 
     <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -471,8 +489,8 @@
                 <div class="modal-body">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <video id="popup-video" width="100%" muted controls loop playsinline>
-                        <source src="public/images/Reto4.mp4" type="video/mp4">
-                        <source src="public/images/Reto4.webm" type="video/webm">
+                        <source src="/public/images/Reto4.mp4" type="video/mp4">
+                        <source src="/public/images/Reto4.webm" type="video/webm">
                         Tu navegador no soporta la etiqueta de video.
                     </video>
                 </div>
@@ -484,6 +502,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
     
-    <script src="public/js/script.js"></script>
+    <script src="/public/js/script.js"></script>
 </body>
 </html>

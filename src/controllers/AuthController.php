@@ -1,12 +1,17 @@
 <?php
 
+// Incluir el autoloader de Composer para poder usar la librería JWT
+require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
+
+// Usar la clase JWT
+use Firebase\JWT\JWT;
+
 class AuthController {
 
     /**
      * Muestra una página con un botón para simular el inicio de sesión.
      */
     public function showLogin() {
-        // Más adelante, esto puede ser un formulario de login real.
         $html = <<<HTML
 <!DOCTYPE html>
 <html lang="es">
@@ -35,13 +40,12 @@ HTML;
     }
 
     /**
-     * Procesa el login de prueba y crea la sesión COMPLETA.
-     * La sesión ya está iniciada por index.php
+     * Procesa el login, crea la sesión/token y redirige al dashboard.
      */
     public function processTestLogin() {
-        // Simular una autenticación COMPLETA con todas las variables que la mesa de ayuda espera.
-        $_SESSION['is_jefe'] = 0; // 0 para no, 1 para sí
-        $_SESSION['usu_id'] = 1; // Usamos integer como en la sesión real
+        // 1. Crear la sesión local para la intranet
+        $_SESSION['is_jefe'] = 0;
+        $_SESSION['usu_id'] = 1;
         $_SESSION['usu_nom'] = 'Alexander'; 
         $_SESSION['usu_ape'] = 'Pardo'; 
         $_SESSION['rol_id'] = 2; 
@@ -49,23 +53,39 @@ HTML;
         $_SESSION['dp_id'] = null;
         $_SESSION['car_id'] = null;
 
-        // --- PASO DE DEPURACIÓN ---
-        echo '<h1>Depuración de Sesión</h1>';
-        echo '<p>Se han asignado las siguientes variables a la sesión:</p>';
-        echo '<pre>';
-        print_r($_SESSION);
-        echo '</pre>';
-        echo '<p>Si ves esto, el siguiente paso sería redirigir a la página principal. Si no llegas allí, es porque la sesión no se está guardando o leyendo correctamente después de la redirección.</p>';
-        exit(); // Detenemos la ejecución para poder ver este mensaje.
+        // 2. Generar el Token JWT para los otros servicios
+        $secret_key = 'ESTA-ES-UNA-CLAVE-DE-EJEMPLO-CAMBIALA-POR-ALGO-SEGURO';
+        $issuer_claim = "intranet.electrocreditosdelcauca.com";
+        $audience_claim = "electrocreditosdelcauca.com";
+        $issuedat_claim = time();
+        $expire_claim = $issuedat_claim + 3600; // 1 hora
+
+        $payload = [
+            'iss' => $issuer_claim,
+            'aud' => $audience_claim,
+            'iat' => $issuedat_claim,
+            'exp' => $expire_claim,
+            'data' => [
+                'id' => 1,
+                'email' => 'jhonalexander2016.com@gmail.com',
+                'cedula' => '1061701851'
+            ]
+        ];
+        $jwt = JWT::encode($payload, $secret_key, 'HS256');
+
+        // 3. Guardar el token en la sesión para usarlo en el dashboard
+        $_SESSION['sso_token'] = $jwt;
+
+        // 4. Redirigir a la página de inicio
+        header('Location: /');
+        exit();
     }
 
     /**
      * Cierra la sesión del usuario.
-     * La sesión ya está iniciada por index.php
      */
     public function logout() {
         session_destroy();
-        
         header('Location: /login');
         exit();
     }
